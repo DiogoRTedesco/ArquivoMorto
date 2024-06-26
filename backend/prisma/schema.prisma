@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // ou mysql, sqlite, etc.
+  url      = env("DATABASE_URL")
+}
+
+enum AccessLevel {
+  USER
+  STAFF
+  ADMIN
+}
+
+model User {
+  id          Int         @id @default(autoincrement())
+  username    String      @unique
+  password    String
+  accessLevel AccessLevel @default(USER)
+  createdAt   DateTime?   @default(now())
+  updatedAt   DateTime    @updatedAt
+  logs        Log[]
+}
+
+model Employee {
+  id              Int       @id @default(autoincrement())
+  name            String
+  birthDate       DateTime // Data de nascimento
+  cpf             String?
+  pis             String?
+  ctps            String? // Carteira de Trabalho e Previdência Social
+  admissionDate   DateTime? // Data de admissão
+  terminationDate DateTime? // Data de rescisão (campo opcional)
+  nre             String? // Número de Registro do Empregado
+  files           File[]
+}
+
+model File {
+  id         Int      @id @default(autoincrement())
+  fileName   String
+  filePath   String
+  uploadDate DateTime @default(now())
+  employeeId Int
+  employee   Employee @relation(fields: [employeeId], references: [id])
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  action    String
+  userId    Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
