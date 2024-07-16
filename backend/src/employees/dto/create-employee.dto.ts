@@ -1,4 +1,4 @@
-import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateEmployeeDto {
   @IsNotEmpty()
@@ -6,8 +6,8 @@ export class CreateEmployeeDto {
   name: string;
 
   @IsNotEmpty()
-  @IsDate()
-  birthDate: Date;
+  @IsDateString({strict:false,strictSeparator: false})
+  birthDate: string;
 
   @IsOptional()
   @IsString()
@@ -22,12 +22,12 @@ export class CreateEmployeeDto {
   ctps?: string;
 
   @IsOptional()
-  @IsDate()
-  admissionDate?: Date;
+  @IsDateString({strict:false,strictSeparator: false})
+  admissionDate?: string;
 
   @IsOptional()
-  @IsDate()
-  terminationDate?: Date;
+  @IsDateString({strict:false,strictSeparator: false})
+  terminationDate?: string;
 
   @IsOptional()
   @IsString()

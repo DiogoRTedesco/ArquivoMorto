@@ -26,5 +26,12 @@ export class EmployeesController {
     return this.employeesService.getAllEmployees();
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('search')
+  async getEmployeeByName(@Body('name') name: string) {
+    return this.employeesService.getEmployeeByName(name);
+    }
+    
+
   // Adicione outros endpoints conforme necessário
 }

@@ -10,6 +10,7 @@ import { EmployeesModule } from './employees/employees.module';
 import { FilesModule } from './files/files.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
+import { LogService } from './log/log.service';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { PrismaService } from './prisma/prisma.service';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
+    LogService,
   ],
 })
 export class AppModule {}

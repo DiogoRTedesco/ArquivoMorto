@@ -41,9 +41,9 @@ export class FilesController {
       },
     },
   })
-  async uploadFile(@UploadedFile() file, @Param('employeeId') employeeId: number) {
+  async uploadFile(@UploadedFile() file, @Param('employeeId') employeeId: string) {
     const employee = await this.prismaService.employee.findUnique({
-      where: { id: employeeId },
+      where: { id: parseInt( employeeId) },
     });
 
     if (!employee) {
@@ -54,7 +54,7 @@ export class FilesController {
       fileName: file.filename,
       filePath: file.path,
       employee: {
-        connect: { id: employeeId },
+        connect: { id: parseInt(employeeId) },
       },
     });
   }
